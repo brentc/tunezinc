@@ -6,7 +6,7 @@ Synchronize your Google Music Playlists with Spotify
 
 1. git clone git@github.com:brentc/tunezinc.git
 1. mkvirtualenv TuneZinc
-1. pip install requirements.txt
+1. pip install -r requirements.txt
 
 ## Configuration 
 
