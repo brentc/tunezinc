@@ -63,6 +63,11 @@ See [docs/TODO](docs/TODO.md) for thoughts on what's missing/needed.
 
 Brent Charbonneau
 
+Made possible by the following awesome projects:
+
+* [gmusicapi](https://github.com/simon-weber/gmusicapi) - an unofficial API for Google Play Music
+* [Spotipy](https://github.com/plamere/spotipy) - a Python client for The Spotify Web API
+
 ## License
 
 The MIT License (MIT)
