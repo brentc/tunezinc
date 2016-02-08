@@ -7,6 +7,7 @@ code and re-implementing logic.
 1. Prompt for passwords rather than pulling them from environment
 1. A better way to specify the playlists to sync
 1. Re-implement song-matching logic, it's a nightmare
+1. Tests (*sigh*)
 
 ## Long Term
 
