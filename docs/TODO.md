@@ -1,3 +1,6 @@
+There's lots to do! The initial release was hacked together over a day, and could use a bunch of work re-organizing
+code and re-implementing logic.
+
 ## Short Term
 
 1. Better output, python.logging isn't pretty
