@@ -8,27 +8,25 @@ Synchronize your Google Music Playlists with Spotify
 1. mkvirtualenv TuneZinc
 1. pip install -r requirements.txt
 
-## Configuration 
+## Configuration
 
 Set the following environment variables:
 
-* `GMUSIC_USERNAME` Your google username
-* `GMUSIC_PASSWORD` Your google password
-* `GMUSIC_PLAYLISTS` a '`;`' separated list of playlist names you want to sync
+- `GMUSIC_PLAYLISTS` a '`;`' separated list of playlist names you want to sync
 
-You will need to register a Spotify application to authenticate with spotify. Go to 
-[My Applications](https://developer.spotify.com/my-applications/#!/applications) and "Create An 
+You will need to register a Spotify application to authenticate with spotify. Go to
+[My Applications](https://developer.spotify.com/my-applications/#!/applications) and "Create An
 App":
-    
-* Application Name: TuneZinc
-* Description: _Some Description_
-* Redirect URIs: `http://example.com/tunezinc/`
+
+- Application Name: TuneZinc
+- Description: _Some Description_
+- Redirect URIs: `http://example.com/tunezinc/`
 
 Save the app and configure the following environment variables:
-    
-* `SPOTIFY_USERNAME` Your spotify username
-* `SPOTIFY_CLIENT_ID` Your new app's Client ID
-* `SPOTIFY_CLIENT_SECRET` Your new app's Client Secret
+
+- `SPOTIFY_USERNAME` Your spotify username
+- `SPOTIFY_CLIENT_ID` Your new app's Client ID
+- `SPOTIFY_CLIENT_SECRET` Your new app's Client Secret
 
 ## Usage
 
@@ -36,16 +34,13 @@ Save the app and configure the following environment variables:
 python tunezinc.py
 ```
 
-The first time you run it, it will prompt you to oAuth authenticate with Spotify by open a browser,
-granting access and pasting the redirected URL back to the console.
-
-You may also need to do a similar process with Google Music if it needs to get details from any 
-tracks you uploaded via All Access (even though you must still provide your username and password as
-an environment variable)
+The first time you run it, it will prompt you to OAuth authenticate with Google Music and Spotify by
+opening a browser, granting access and pasting the code and redirected URL back to the console
+respectively.
 
 ## TODO
 
-See [docs/TODO](docs/TODO.md) for thoughts on what's missing/needed. 
+See [docs/TODO](docs/TODO.md) for thoughts on what's missing/needed.
 
 ## Contributing
 
@@ -57,7 +52,8 @@ See [docs/TODO](docs/TODO.md) for thoughts on what's missing/needed.
 
 ## History
 
-* Feb 7, 2016 - First working version
+- Nov 1, 2019 - Python3 compatible, OAuth Login for GMusic API
+- Feb 7, 2016 - First working version
 
 ## Credits
 
@@ -65,8 +61,8 @@ Brent Charbonneau
 
 Made possible by the following awesome projects:
 
-* [gmusicapi](https://github.com/simon-weber/gmusicapi) - an unofficial API for Google Play Music
-* [Spotipy](https://github.com/plamere/spotipy) - a Python client for The Spotify Web API
+- [gmusicapi](https://github.com/simon-weber/gmusicapi) - an unofficial API for Google Play Music
+- [Spotipy](https://github.com/plamere/spotipy) - a Python client for The Spotify Web API
 
 ## License
 

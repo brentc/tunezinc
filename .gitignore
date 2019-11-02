@@ -1,3 +1,4 @@
 .gmusic.credentials
 .cache-*
 *.pyc
+.vscode/*
