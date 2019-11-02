@@ -86,11 +86,11 @@ class Track(object):
 
         edition_match = self.EDITION_PATTERN.search(title)
         if edition_match:
-            title = u"{title} {edition}".format(**edition_match.groupdict())
+            title = "{title} {edition}".format(**edition_match.groupdict())
 
         version_match = self.VERSION_PATTERN.search(title)
         if version_match:
-            title = u"{title} {version}".format(**version_match.groupdict())
+            title = "{title} {version}".format(**version_match.groupdict())
 
         return title
 
@@ -102,7 +102,7 @@ class Track(object):
             if re.search(r"Standard|Explicit|UK|US|International", album_edition_match.group('edition'), re.IGNORECASE):
                 album = album_edition_match.group('title')
             else:
-                album = u"{title} {edition}".format(**album_edition_match.groupdict())
+                album = "{title} {edition}".format(**album_edition_match.groupdict())
 
         album_version_match = self.VERSION_PATTERN.search(album)
         if album_version_match:
@@ -110,7 +110,7 @@ class Track(object):
                          album_version_match.group('version'), re.IGNORECASE):
                 album = album_version_match.group('title')
             else:
-                album = u"{title} {version}".format(**album_version_match.groupdict())
+                album = "{title} {version}".format(**album_version_match.groupdict())
 
         return album
 
@@ -134,11 +134,11 @@ class Track(object):
             return False
 
         if local_album_edition_match:
-            if u"{title} - {edition}".format(
+            if "{title} - {edition}".format(
                     **local_album_edition_match.groupdict()) == track_info_album:
                 return True
 
-            if u"{title} {edition}".format(
+            if "{title} {edition}".format(
                     **local_album_edition_match.groupdict()) == track_info_album:
                 return True
 
@@ -147,7 +147,7 @@ class Track(object):
                     return True
 
         if track_info_album_edition_match:
-            if u"{title} - {edition}".format(
+            if "{title} - {edition}".format(
                     **track_info_album_edition_match.groupdict()) == local_album:
                 return True
 
@@ -182,7 +182,7 @@ class Track(object):
 
             if missing:
                 # Check for non-parens versions
-                if u"{title} - feat. {featuring}".format(
+                if "{title} - feat. {featuring}".format(
                         **featuring_match.groupdict()
                 ) == track_info_title:
                     return True
@@ -202,12 +202,12 @@ class Track(object):
         version_match = self.VERSION_PATTERN.search(local_title)
         if version_match:
             # Check for non-parens versions
-            if u"{title} - {version}".format(
+            if "{title} - {version}".format(
                     **version_match.groupdict()
             ) == track_info_title:
                 return True
 
-            if u"{title} {version}".format(
+            if "{title} {version}".format(
                     **version_match.groupdict()
             ) == track_info_title:
                 return True
@@ -215,24 +215,24 @@ class Track(object):
         edition_match = self.EDITION_PATTERN.search(local_title)
         if edition_match:
             # Check for non-parens versions
-            if u"{title} - {edition}".format(
+            if "{title} - {edition}".format(
                     **edition_match.groupdict()
             ) == track_info_title:
                 return True
 
-            if u"{title} {edition}".format(
+            if "{title} {edition}".format(
                     **edition_match.groupdict()
             ) == track_info_title:
                 return True
 
         return False
 
-    def __unicode__(self):
-        return u"'{}' by {} from the album {}{}".format(
+    def __str__(self):
+        return "'{}' by {} from the album {}{}".format(
             self.title,
             self.artist,
             self.album,
-            u" uri:{}".format(self.spotify_uri) if self.spotify_uri else "",
+            " uri:{}".format(self.spotify_uri) if self.spotify_uri else "",
         )
 
     def __nonzero__(self):
@@ -240,7 +240,7 @@ class Track(object):
 
 
 class TuneZinc(object):
-    SPOTIFY_PLAYLIST_NAME_FORMAT = '{name} (tunezinc)'
+    SPOTIFY_PLAYLIST_NAME_FORMAT = '{name}'
 
     def __init__(self, config):
         self.config = config
@@ -254,17 +254,17 @@ class TuneZinc(object):
         )
 
     def sync(self):
-        logger.info(u"Found {}/{} gmusic playlists to sync".format(len(self.gmusic.playlists),
+        logger.info("Found {}/{} gmusic playlists to sync".format(len(self.gmusic.playlists),
                                                                    len(
                                                                        self.config.GMUSIC_PLAYLISTS)))
 
         for gmusic_playlist in self.gmusic.playlists:
-            logger.info(u"Gmusic Playlist: {name} ({id})".format(**gmusic_playlist))
+            logger.info("Gmusic Playlist: {name} ({id})".format(**gmusic_playlist))
 
             spotify_playlist = self.spotify.get_or_create_playlist(
                 self._format_spotify_playlist_name(gmusic_playlist['name'])
             )
-            logger.info(u"Spotify Playlist: {name} ({id})".format(**spotify_playlist))
+            logger.info("Spotify Playlist: {name} ({id})".format(**spotify_playlist))
             self.sync_playlists(gmusic_playlist, spotify_playlist)
 
     def _format_spotify_playlist_name(self, name):
@@ -282,10 +282,10 @@ class TuneZinc(object):
         return False
 
     def sync_playlists(self, gmusic_playlist, spotify_playlist):
-        logger.debug(u"Synchronizing playlist...")
+        logger.debug("Synchronizing playlist...")
 
         if not gmusic_playlist['tracks']:
-            logger.info(u"No tracks found in gmusic playlist '{}'".format(gmusic_playlist['name']))
+            logger.info("No tracks found in gmusic playlist '{}'".format(gmusic_playlist['name']))
             return
 
         spotify_playlist_tracks = self.spotify.get_playlist_tracks(spotify_playlist['uri'])
@@ -301,7 +301,7 @@ class TuneZinc(object):
                 (spotify_max_date >= gmusic_max_date) and
                     spotify_tracks_count == gmusic_tracks_count):
             logger.info(
-                u"Spotify playlist last modified after gmusic & track counts match. Skipping.".format(
+                "Spotify playlist last modified after gmusic & track counts match. Skipping.".format(
                     gmusic_playlist['name']
                 )
             )
@@ -330,7 +330,7 @@ class TuneZinc(object):
             logger.info("No missing tracks!")
             return
 
-        logger.debug(u"Identified {} missing track(s)".format(len(missing_tracks)))
+        logger.debug("Identified {} missing track(s)".format(len(missing_tracks)))
 
         found_tracks = []
         for missing_track in missing_tracks:
@@ -338,9 +338,9 @@ class TuneZinc(object):
             if track:
                 found_tracks.append(track)
 
-        logger.debug(u"Found {}/{} missing track(s)".format(len(found_tracks), len(missing_tracks)))
+        logger.debug("Found {}/{} missing track(s)".format(len(found_tracks), len(missing_tracks)))
 
         if found_tracks:
             self.spotify.add_tracks_to_playlist(spotify_playlist, found_tracks)
             logger.info(
-                u"Added {}/{} missing track(s)!".format(len(found_tracks), len(missing_tracks)))
+                "Added {}/{} missing track(s)!".format(len(found_tracks), len(missing_tracks)))

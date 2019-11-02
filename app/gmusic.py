@@ -21,10 +21,10 @@ class Gmusic(object):
 
     def client_login(self):
         if not self._client.login(self.username, self.password, Mobileclient.FROM_MAC_ADDRESS):
-            logger.error(u"Gmusic mobile client authentication failed")
+            logger.error("Gmusic mobile client authentication failed")
             return False
 
-        logger.info(u"Gmusic mobile client authentication succeeded.")
+        logger.info("Gmusic mobile client authentication succeeded.")
         return True
 
     def manager_login(self):
@@ -39,10 +39,10 @@ class Gmusic(object):
         if not self._manager.login(
                 oauth_credentials=credentials,
         ):
-            logger.error(u"Gmusic music manager authentication failed")
+            logger.error("Gmusic music manager authentication failed")
             return False
 
-        logger.info(u"Gmusic music manager authentication succeeded.")
+        logger.info("Gmusic music manager authentication succeeded.")
         return True
 
     @property
@@ -64,7 +64,7 @@ class Gmusic(object):
     @property
     def _playlists(self):
         playlists = self.client.get_all_user_playlist_contents()
-        logger.debug(u"Loaded {} playlists".format(len(playlists)))
+        logger.debug("Loaded {} playlists".format(len(playlists)))
         return playlists
 
     @cached_property

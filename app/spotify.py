@@ -54,7 +54,7 @@ class Spotify(object):
         playlists = {}
         for playlist in self.client.user_playlists(self.username)['items']:
             if playlist['owner']['id'] != self.username:
-                logger.debug(u"Skipping playlist owned by a different user, {} ".format(playlist['name']))
+                logger.debug("Skipping playlist owned by a different user, {} ".format(playlist['name']))
                 continue
 
             name = playlist['name']
@@ -62,7 +62,7 @@ class Spotify(object):
                 raise Exception("Duplicate playlist named '{}' found.".format(playlist['name']))
             playlists[name] = playlist
 
-        logger.debug(u"Loaded {} playlists".format(len(playlists)))
+        logger.debug("Loaded {} playlists".format(len(playlists)))
         return playlists
 
     @property
@@ -73,7 +73,7 @@ class Spotify(object):
 
     def _create_playlist(self, name):
         playlist = self.client.user_playlist_create(self.username, name)
-        logger.info(u"Playlist named '{}' created.".format(name))
+        logger.info("Playlist named '{}' created.".format(name))
         self._playlists[name] = playlist
         return playlist
 
@@ -93,7 +93,7 @@ class Spotify(object):
             added_at = item.get('added_at')
             if not added_at:
                 continue
-            if max_added_at < added_at:
+            if not max_added_at or max_added_at < added_at:
                 max_added_at = added_at
 
         if max_added_at:
@@ -104,11 +104,11 @@ class Spotify(object):
         try:
             return self.get_playlist(name)
         except KeyError:
-            logger.info(u"Playlist named '{}' doesn't exist".format(name))
+            logger.info("Playlist named '{}' doesn't exist".format(name))
             return self._create_playlist(name)
 
     def find_track(self, track):
-        logger.debug(u"Searching for spotify track matching: {}".format(track))
+        logger.debug("Searching for spotify track matching: {}".format(track))
         parts = [
             u'track:"{}"'.format(track.search_title),
             u'artist:"{}"'.format(track.artist),
@@ -123,13 +123,13 @@ class Spotify(object):
 
         items = results.get('tracks', {}).get('items')
         if not items:
-            logger.info(u"No match found for {}".format(track))
+            logger.info("No match found for {}".format(track))
             return None
 
         for track_info in items:
             if track.matches_spotify_track_info(track_info):
                 track.spotify_uri = track_info.get('uri')
-                logger.debug(u"Match found: {}, {}".format(track, track_info))
+                logger.debug("Match found: {}, {}".format(track, track_info))
                 return track
 
     def add_tracks_to_playlist(self, playlist, tracks):
