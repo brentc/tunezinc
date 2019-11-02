@@ -10,17 +10,27 @@ logger = logging.getLogger(__name__)
 
 
 class Gmusic(object):
-    _client = Mobileclient()
-    _manager = Musicmanager()
 
-    def __init__(self, username, password, playlists_to_sync, credentials_storage_location):
-        self.username = username
-        self.password = password
+    def __init__(self, playlists_to_sync, credentials_storage_location, debug):
         self.playlists_to_sync = playlists_to_sync
         self.credentials_storage_location = credentials_storage_location
+        self._client = Mobileclient(debug_logging=debug)
+        self._manager = Musicmanager(debug_logging=debug)
+
 
     def client_login(self):
-        if not self._client.login(self.username, self.password, Mobileclient.FROM_MAC_ADDRESS):
+        credentials = self.credentials_storage_location
+
+        if not os.path.isfile(credentials):
+            credentials = self._client.perform_oauth(
+                storage_filepath=self.credentials_storage_location,
+                open_browser=True
+            )
+
+        if not self._client.oauth_login(
+            device_id=Mobileclient.FROM_MAC_ADDRESS,
+            oauth_credentials=credentials,
+        ):
             logger.error("Gmusic mobile client authentication failed")
             return False
 

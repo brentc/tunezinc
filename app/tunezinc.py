@@ -244,8 +244,11 @@ class TuneZinc(object):
 
     def __init__(self, config):
         self.config = config
-        self.gmusic = Gmusic(config.GMUSIC_USERNAME, config.GMUSIC_PASSWORD,
-                             config.GMUSIC_PLAYLISTS, config.GMUSIC_CREDENTIALS_STORAGE_LOCATION)
+        self.gmusic = Gmusic(
+            config.GMUSIC_PLAYLISTS, 
+            config.GMUSIC_CREDENTIALS_STORAGE_LOCATION,
+            config.DEBUG
+        )
         self.spotify = Spotify(
             config.SPOTIFY_USERNAME,
             config.SPOTIFY_CLIENT_ID,
@@ -301,7 +304,7 @@ class TuneZinc(object):
                 (spotify_max_date >= gmusic_max_date) and
                     spotify_tracks_count == gmusic_tracks_count):
             logger.info(
-                "Spotify playlist last modified after gmusic & track counts match. Skipping.".format(
+                "Spotify playlist last modified after gmusic & track counts match. Skipping ({}).".format(
                     gmusic_playlist['name']
                 )
             )
